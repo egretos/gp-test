@@ -57,7 +57,10 @@
                     <td>{{ transaction.happened_at }}</td>
                     <td>{{ transaction.country_code }}</td>
                     <td>{{ transaction.currency_code }}</td>
-                    <td>{{ transaction.amountInDefaultCurrency / 100}} EUR | {{ transaction.amount / 100 }} {{ transaction.currency_code }}</td>
+                    <td>
+                        {{ transaction.amountInDefaultCurrency is not null ? (transaction.amountInDefaultCurrency / 100)|number_format(2) ~ ' EUR' : '?? EUR' }} | {{ transaction.amount / 100|number_format(2) }}
+                        {{ transaction.currency_code }}
+                    </td>
                 </tr>
             {% else %}
                 <tr>

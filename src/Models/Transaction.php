@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Transaction|Builder query()
  * @method Builder filter($queryParams)
  * @property Collection $currencyRates
- * @property float $amountInDefaultCurrency
+ * @property ?int $amountInDefaultCurrency
  * @property int $amount
  */
 class Transaction extends Model
@@ -41,12 +41,16 @@ class Transaction extends Model
 		return $this->HasMany(CurrencyRate::class, 'currency_from_iso', 'currency_code');
 	}
 	
-	public function getAmountInDefaultCurrencyAttribute(): int
+	public function getAmountInDefaultCurrencyAttribute(): ?int
 	{
 		$currencyRate = $this
 			->currencyRates
 			->where('currency_to_iso', env('DEFAULT_CURRENCY'))
-			->firstOrFail();
+			->first();
+		
+		if (!$currencyRate) {
+			return null;
+		}
 		
 		return round($this->amount * $currencyRate->rate, 0);
 	}
