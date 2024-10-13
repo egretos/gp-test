@@ -4,6 +4,7 @@ namespace Egretos\GamepointTestTask\Console;
 
 use Egretos\GamepointTestTask\Database\Migrations\CreateCountriesTable;
 use Egretos\GamepointTestTask\Database\Migrations\CreateCurrenciesTable;
+use Egretos\GamepointTestTask\Database\Migrations\CreateCurrencyRatesTable;
 use Egretos\GamepointTestTask\Database\Migrations\CreateTransactionsTable;
 use Egretos\GamepointTestTask\Database\Migrations\CreateUsersTable;
 use Symfony\Component\Console\Command\Command;
@@ -24,6 +25,7 @@ class MigrateCommand extends Command
 			new CreateUsersTable(),
 			new CreateCountriesTable(),
 			new CreateCurrenciesTable(),
+			new CreateCurrencyRatesTable(),
 			new CreateTransactionsTable(),
 		];
 		

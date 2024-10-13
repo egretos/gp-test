@@ -6,6 +6,7 @@ use Egretos\GamepointTestTask\Models\Country;
 use Egretos\GamepointTestTask\Models\Currency;
 use Egretos\GamepointTestTask\Models\Transaction;
 use Egretos\GamepointTestTask\Validators\ViewTransactionsRequestValidator;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -39,6 +40,9 @@ class TransactionController
 		$currencies = Currency::all()->toArray();
 		
 		$transactions = Transaction::query()
+			->with([
+				'currencyRates' => fn (HasMany $query) => $query->where('currency_to_iso', env('DEFAULT_CURRENCY')),
+			])
 			->filter($queryParams)
 			->paginate(15, ['*'], 'page', $queryParams['page']);
 		

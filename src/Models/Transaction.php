@@ -2,13 +2,17 @@
 
 namespace Egretos\GamepointTestTask\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static Transaction|Builder query()
  * @method Builder filter($queryParams)
+ * @property Collection $currencyRates
+ * @property float $amountInDefaultCurrency
+ * @property int $amount
  */
 class Transaction extends Model
 {
@@ -32,19 +36,19 @@ class Transaction extends Model
 		'happened_at' => 'datetime',
 	];
 	
-	public function user(): BelongsTo
+	public function currencyRates(): HasMany
 	{
-		return $this->belongsTo(User::class, 'user_id', 'id');
+		return $this->HasMany(CurrencyRate::class, 'currency_from_iso', 'currency_code');
 	}
 	
-	public function currency(): BelongsTo
+	public function getAmountInDefaultCurrencyAttribute(): int
 	{
-		return $this->belongsTo(Currency::class, 'currency_code', 'iso_code');
-	}
-	
-	public function country(): BelongsTo
-	{
-		return $this->belongsTo(Country::class, 'country_code', 'iso_code');
+		$currencyRate = $this
+			->currencyRates
+			->where('currency_to_iso', env('DEFAULT_CURRENCY'))
+			->firstOrFail();
+		
+		return round($this->amount * $currencyRate->rate, 0);
 	}
 	
 	public function scopeFilter(Builder $query, array $filters): Builder
