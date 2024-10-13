@@ -1,0 +1,26 @@
+{# views/layout.twig #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Super Duper Transaction Viewer{% endblock %}</title>
+    <link rel="stylesheet" href="css/main.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+<header>
+    <h1>Super Duper Transaction Viewer</h1>
+</header>
+
+<div class="content">
+    {% block content %}
+        <!-- Child template content goes here -->
+    {% endblock %}
+</div>
+
+<footer>
+    <p>© 2024 Transaction Viewer App, made by Ihor Melnychuk for Game Point</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+{# views/transactions.twig #}
+{% extends 'layout.twig' %}
+
+{% block title %}Transactions List{% endblock %}
+
+{% block content %}
+    <form method="GET" action="">
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" name="user_id" value="{{ user_id ?? '' }}">
+
+        <label for="country_code">Country:</label>
+        <select id="country_code" name="country_code">
+            <option value="">-- Select Country --</option>
+            {% for country_option in countries %}
+                <option value="{{ country_option.iso_code }}" {% if country_option.iso_code == country_code %}selected{% endif %}>
+                    {{ country_option.iso_code }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="currency_code">Currency:</label>
+        <select id="currency_code" name="currency_code">
+            <option value="">-- Select Currency --</option>
+            {% for currency_option in currencies %}
+                <option value="{{ currency_option.iso_code }}" {% if currency_option.iso_code == currency_code %}selected{% endif %}>
+                    {{ currency_option.iso_code }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{{ date ?? '' }}">
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Timestamp</th>
+            <th>Country</th>
+            <th>Currency</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.user_id }}</td>
+                <td>{{ transaction.happened_at }}</td>
+                <td>{{ transaction.country_code }}</td>
+                <td>{{ transaction.currency_code }}</td>
+                <td>{{ transaction.amount / 100 }} {{ transaction.country_code }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No transactions found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <span>Page {{ current_page }} of {{ total_pages }}</span>
+        {% if current_page > 1 %}
+            <a href="?page={{ current_page - 1 }}&user_id={{ user_id }}&country_code={{ country_code }}&currency_code={{ currency_code }}&date={{ date }}">Previous</a>
+        {% endif %}
+        {% if current_page < total_pages %}
+            <a href="?page={{ current_page + 1 }}&user_id={{ user_id }}&country_code={{ country_code }}&currency_code={{ currency_code }}&date={{ date }}">Next</a>
+        {% endif %}
+    </div>
+
+{% endblock %}

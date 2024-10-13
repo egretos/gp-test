@@ -1,0 +1,28 @@
+{
+    "name": "egretos/gamepoint-test-task",
+    "description": "Import Data from csv to DB, search & filter",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Egretos\\GamepointTestTask\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "egretos"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/database": "^12.0@dev",
+        "symfony/console": "7.2.x-dev",
+        "league/csv": "^9.0@dev",
+        "laravel/serializable-closure": "^1.0@dev",
+        "ramsey/uuid": "4.x-dev",
+        "symfony/http-foundation": "7.2.x-dev",
+        "twig/twig": "4.x-dev",
+        "illuminate/pagination": "^12.0@dev",
+        "symfony/validator": "7.2.x-dev"
+    }
+}
