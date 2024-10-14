@@ -19,7 +19,7 @@ class CSVImportService
 	 * @throws UnavailableStream
 	 * @throws Exception
 	 */
-	public function importCSVFile(string $filePath): void
+	public function importCSVFile(string $filePath): int
 	{
 		$csv = Reader::createFromPath($filePath);
 		
@@ -32,6 +32,8 @@ class CSVImportService
 				// It's a test task, but usually I put logging here
 			}
 		}
+		
+		return count($csv);
 	}
 	
 	public function bulkStoreTransactions(Collection $transactionsData): void

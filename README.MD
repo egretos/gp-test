@@ -32,13 +32,18 @@ Once the services are up, access the PHP container:
 docker-compose exec php-fpm bash
 ```
 
-### 5. Run Migrations
+### 5. Install Composer Dependencies
+```bash
+composer install
+```
+
+### 6. Run Migrations
 Run the migrations to set up your database:
 ```bash
 php console.php app:migrate
 ```
 
-### 6. Import CSV Data
+### 7. Import CSV Data
 Internal data file contains 100000 different records
 
 Import Internal CSV data into the database:
@@ -46,7 +51,7 @@ Import Internal CSV data into the database:
 php console.php import:csv ./data/extended_payments.csv
 ```
 
-### 7. Import Currency Rates
+### 8. Import Currency Rates
 Import currency rates using your preferred source:
 ```bash
 php console.php import:currency-rates

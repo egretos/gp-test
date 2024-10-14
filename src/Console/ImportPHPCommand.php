@@ -32,12 +32,13 @@ class ImportPHPCommand extends Command
 		$path = $input->getArgument('path');
 		
 		try {
-			$this->csvImportService->importCSVFile($path);
+			$total = $this->csvImportService->importCSVFile($path);
 		} catch (Exception $e) {
+			$total = 0;
 			$output->writeln('<error>' . $e->getMessage() . '</error>');
 		}
 		
-		$output->writeln('<info>Success!,</info>');
+		$output->writeln('<info>Success, imported '.$total.' transactions</info>');
 		
 		return Command::SUCCESS;
 	}
